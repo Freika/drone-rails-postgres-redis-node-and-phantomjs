@@ -6,7 +6,8 @@ RUN echo 'gem: --no-rdoc --no-ri' >> "$HOME/.gemrc"
 
 RUN apt-get update && \
     apt-get install -y build-essential \
-    postgresql-client libssl-dev && \
+    postgresql-client libssl-dev \
+    qt5-default libqt5webkit5-dev gstreamer1.0-plugins-base gstreamer1.0-tools gstreamer1.0-x && \
     rm -rf /var/lib/apt/lists/*
 
 RUN wget -q -O - https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2 | tar xj && \
