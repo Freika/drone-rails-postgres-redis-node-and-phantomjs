@@ -1,5 +1,5 @@
 build:
-  image: calces/drone-rails-postgres-redis-node-and-phantomjs:latest
+  image: calces/drone-rails-postgres-redis-node-and-phantomjs
   bash:
     - script:
       - echo 'CREATING DATABASE'
