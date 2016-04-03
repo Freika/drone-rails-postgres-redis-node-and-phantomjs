@@ -18,3 +18,5 @@ RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh
     nvm install 5.7.1 && nvm alias default 5.7.1
 
 RUN npm install -g npm@3.8.0
+
+RUN gem install bundler --pre
