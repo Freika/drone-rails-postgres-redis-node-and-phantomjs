@@ -1,47 +1,44 @@
 build:
+  privileged: true
   image: calces/drone-rails-postgres-redis-node-and-phantomjs
-  bash:
-    - script:
-      - echo 'CREATING DATABASE'
-      - psql -c 'create database test;' -U postgres -h 127.0.0.1
-      - echo 'INSTALLING NODE MODULES'
-      - cd /drone/src/client
-      - npm install
-      - cd /drone/src
-      - echo 'BUNDLE TIME'
-      - mkdir -p /drone/.bundle
-      - bundle config build.nokogiri --use-system-libraries
-      - bundle install --path .bundle --without "production staging" --jobs 100 --retry 5
-      - echo 'DATABASE SETUP TIME'
-      - export RAILS_ENV=test
-      - cp config/database.drone.yml config/database.yml
-      - bundle exec rake db:test:prepare
-      - echo 'PRECOMPILE ASSETS'
-      - bundle exec rake assets:precompile
-      - echo 'RUN RSPEC'
-      - bundle exec rspec
+  pull: true
+  environment:
+    - RAILS_ENV=test
+  commands:
+    - cd client
+    - npm -d install
+    - cd ../
+    - bundle config build.nokogiri --use-system-libraries
+    - bundle install --jobs 100 --retry 5
+    - cp config/database.drone.yml config/database.yml
+    - until pg_isready -h localhost -U postgres -q; do sleep 1; done
+    - psql -c 'create database test;' -U postgres -h 127.0.0.1
+    - export RAILS_ENV=test
+    - bundle exec rake db:schema:load
+    - bundle exec rake assets:precompile
+    - bundle exec rspec
 
 cache:
   mount:
-    - node_modules
+    - /usr/local/bundle
     - client/node_modules
-    - .bundle
-    - .git
 
 compose:
   database:
     image: postgres:9.5.1
     environment:
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password
   cache:
     image: redis:3.0.7-alpine
 
 notify:
   slack:
-    webhook_url: XXX
-    channel: codehappenings
+    webhook_url: https://hooks.slack.com....
+    channel: general
     username: drone
+    on_started: true
+    on_success: true
+    on_failure: true
   email:
     recipients:
       - username@domain.com
