@@ -8,7 +8,7 @@ RUN apt-get update && \
     apt-get install -y build-essential \
     postgresql-client libssl-dev \
     qt5-default libqt5webkit5-dev gstreamer1.0-plugins-base gstreamer1.0-tools gstreamer1.0-x \
-    node-gyp libreadline-gplv2-dev libncursesw5-dev libssl-dev libsqlite3-dev tk-dev \
+    node-gyp g++ libreadline-gplv2-dev libncursesw5-dev libssl-dev libsqlite3-dev tk-dev \
     libkrb5-dev libgdbm-dev libc6-dev libbz2-dev python2.7-dev && \
     rm -rf /var/lib/apt/lists/*
 
