@@ -88,10 +88,10 @@ RUN wget -q -O - https://s3-eu-west-1.amazonaws.com/calces-devstuff/phantomjs-2.
 
 # redis 3.2.6
 RUN wget -q http://redis.googlecode.com/files/redis-3.2.6.tar.gz && \
-tar -xzf redis-3.2.6.tar.gz && \
-cd redis-3.2.6/ && \
-make && \
-cd src && make all && \
-sudo make install && \
-cd src && make install && \
-redis-server redis.conf && \
+    tar -xzf redis-3.2.6.tar.gz && \
+    cd redis-3.2.6/ && \
+    make && \
+    cd src && make all && \
+    sudo make install && \
+    cd src && make install && \
+    redis-server redis.conf
