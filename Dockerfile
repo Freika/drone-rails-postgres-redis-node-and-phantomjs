@@ -40,6 +40,7 @@ RUN apt-get update && apt-get install -y --force-yes --no-install-recommends \
         gstreamer1.0-x \
         libpq-dev \
         postgresql-9.6 \
+        sudo \
     && rm -rf /var/lib/apt/lists/*
 
 
