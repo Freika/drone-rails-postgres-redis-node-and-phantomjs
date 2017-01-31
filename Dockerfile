@@ -91,3 +91,6 @@ RUN wget -q -O - https://s3-eu-west-1.amazonaws.com/calces-devstuff/phantomjs-2.
 # redis 3.2.6
 RUN wget http://download.redis.io/redis-stable.tar.gz \
     && tar xvzf redis-stable.tar.gz && cd redis-stable && make && make install
+
+EXPOSE 6379
+CMD [ "redis-server" ]
